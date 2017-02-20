@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kibana
+  labels:
+    component: kibana
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  template:
+    metadata:
+      labels:
+        component: kibana
+    spec:
+      containers:
+      - name: kubana
+        image: docker.elastic.co/kibana/kibana:5.2.1
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 5601
+            name: http
+            protocol: TCP
+        volumeMounts:
+          - name: config-volume
+            mountPath: /usr/share/kibana/config/
+
+      volumes:
+          - name: config-volume
+            configMap:
+              name: kibana-config

@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: es-head
+spec:
+  rules:
+    - host: es-head.192.168.150.220.xip.io
+      http:
+        paths:
+          - backend:
+              serviceName: es-head
+              servicePort: 9100
+            path: /

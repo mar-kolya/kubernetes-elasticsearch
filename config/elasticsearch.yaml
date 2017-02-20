@@ -1,0 +1,26 @@
+cluster.name: elasticsearch
+network.host: 0.0.0.0
+
+node:
+  name: ${HOSTNAME}
+  master: ${NODE_MASTER}
+  data: ${NODE_DATA}
+  ingest: ${NODE_INGEST}
+
+http:
+  enabled: true
+  compression: true
+  cors:
+    enabled: true
+    allow-origin: "/https?:\\/\\/es-head.192.168.150.220.xip.io/"
+
+discovery:
+  zen:
+    ping.unicast.hosts: elasticsearch-discovery
+    # This should be set to (number_of_master_replicats/2+1)
+    minimum_master_nodes: 2
+
+xpack:
+  security.enabled: false
+  graph.enabled: false
+  watcher.enabled: false

@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kibana
+spec:
+  rules:
+    - host: kibana.192.168.150.220.xip.io
+      http:
+        paths:
+          - backend:
+              serviceName: kibana
+              servicePort: 5601
+            path: /
