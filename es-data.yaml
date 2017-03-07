@@ -1,13 +1,13 @@
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: apps/v1beta1
+kind: StatefulSet
 metadata:
   name: es-data
   labels:
     component: elasticsearch
     role: data
 spec:
+  serviceName: elasticsearch-data
   replicas: 3
-  revisionHistoryLimit: 5
   template:
     metadata:
       labels:
@@ -50,11 +50,17 @@ spec:
             mountPath: /usr/share/elasticsearch/data
           - name: config-volume
             mountPath: /usr/share/elasticsearch/config
-
+      securityContext:
+        fsGroup: 1000
       volumes:
-          - emptyDir:
-              medium: ""
-            name: storage
-          - name: config-volume
-            configMap:
-              name: elasticsearch-config
+        - name: config-volume
+          configMap:
+            name: elasticsearch-config
+  volumeClaimTemplates:
+    - metadata:
+        name: storage
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 5Gi

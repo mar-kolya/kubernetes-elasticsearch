@@ -2,12 +2,14 @@
 
 #### ES
 ```
+kubectl create namespace es
 kubectl --namespace=es create -f es-discovery-svc.yaml
 kubectl --namespace=es create -f es-svc.yaml
 
 kubectl --namespace=es create configmap elasticsearch-config --from-file=config/elasticsearch.yaml --from-file=config/log4j2.properties
 kubectl --namespace=es create -f es-master.yaml
 
+kubectl --namespace=es create -f es-data-svc.yaml
 kubectl --namespace=es create -f es-data.yaml
 #apparently inject is needed for kibana
 kubectl --namespace=es create -f es-ingest.yaml
