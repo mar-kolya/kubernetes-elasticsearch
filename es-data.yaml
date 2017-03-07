@@ -17,10 +17,12 @@ spec:
       containers:
       - name: es-data
         securityContext:
+          # FIXME: original code had something about mmapping and
+          # such, need to add it back.
           capabilities:
             add:
               - IPC_LOCK
-        image: docker.elastic.co/elasticsearch/elasticsearch:5.2.1
+        image: docker.elastic.co/elasticsearch/elasticsearch:5.2.2
         imagePullPolicy: Always
         env:
           - name: NODE_MASTER
